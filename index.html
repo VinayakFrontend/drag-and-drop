@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-image: url("https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg?semt=ais_hybrid&w=740");
+        background-size: cover;
+        background-repeat: no-repeat;
+        justify-items: center;
+        align-content: center;
+        height: 700px;
+        position: relative;
+      }
+
+      input {
+        border-radius: 10px;
+        height: 30px;
+        width: 80%;
+        padding: 5px;
+        border: none;
+      }
+      .parent {
+        height: 400px;
+        width: 400px;
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin: auto;
+        gap: 20px;
+        border-radius: 10px;
+        border: 1px solid;
+      }
+
+      h1 {
+        color: white;
+        margin-top: 50px;
+      }
+
+      .taskContainer {
+        border: 2px solid white;
+        width: 80%;
+        border-radius: 10px;
+        padding: 10px;
+        overflow: scroll;
+        scrollbar-width: none;
+        margin-bottom: 20px;
+      }
+
+      button {
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-top: 5px;
+      }
+
+      li {
+        list-style: none;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+      }
+
+      button:hover {
+        color: white;
+        background-color: black;
+      }
+      .follow {
+        height: 20px;
+        width: 20px;
+        background-color: aqua;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        position: absolute;
+        z-index: 10;
+      }
+
+      .week {
+        display: flex;
+        gap: 40px;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      .taskContainers {
+        border: solid;
+        color: white;
+        width: 200px;
+        height: 300px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="follow"></div>
+    <div class="parent">
+      <h1>To Do List</h1>
+      <input type="text" id="inputtask" />
+      <div>
+        <button onclick="insert()">Add Task</button>
+        <button onclick="reset()">Reset Task</button>
+        <button onclick="update()">Edit Task</button>
+      </div>
+
+      <div class="taskContainer"></div>
+    </div>
+
+    <div class="week">
+      <div class="taskContainers"><h2>Monaday</h2></div>
+      <div class="taskContainers"><h2>Tuesday</h2></div>
+      <div class="taskContainers"><h2>Wednesday</h2></div>
+      <div class="taskContainers"><h2>Thursday</h2></div>
+      <div class="taskContainers"><h2>Friday</h2></div>
+    </div>
+
+    <script></script>
+
+    <script>
+      let follow = document.querySelector(".follow");
+      document.addEventListener("mousemove", (e) => {
+        let { clientX, clientY } = e;
+        follow.style.transform = `translate(${clientX}px,${clientY}px)`;
+      });
+
+      //insert
+
+      let inputs = document.getElementById("inputtask");
+
+      function insert() {
+        if (inputs.value == "") {
+          alert("Enter Your Task");
+        } else {
+          let newElement = document.createElement("li");
+          newElement.setAttribute("draggable", "true");
+          newElement.setAttribute("class", "lists");
+
+          newElement.innerHTML = `${inputs.value} <button contentEditable="false">Delete</button>`;
+
+          let container = document.querySelector(".taskContainer");
+          container.append(newElement);
+          inputs.value = "";
+
+          newElement.querySelector("button").addEventListener("click", () => {
+            newElement.remove();
+          });
+
+          //newElement.addEventListener("dblclick", () => {newElement.contentEditable = newElement.isContentEditable ? "false" : "true" });
+
+          let lists = document.getElementsByClassName("lists");
+
+          let selected = null;
+
+          for (let list of lists) {
+            list.addEventListener("dragstart", function (e) {
+              console.log(e);
+              //console.log(e.target);
+              selected = e.target;
+            });
+          }
+        }
+
+        taskContainers.addEventListener("dragover",function(e){
+            e.preventDefault();
+    });
+
+    taskContainers.addEventListener("drop",function(){
+        if(selected)
+    {
+        taskContainers.appendChild(selected);
+        selected=null;
+    }
+    });
+      }
+
+      // reset
+
+      function reset() {
+        let reset = document.querySelector(".taskContainer");
+        reset.innerHTML = "";
+        inputs.value = "";
+      }
+
+      //update
+
+      function update() {
+        const taskupdate = document.querySelectorAll(".taskContainer li");
+
+        taskupdate.forEach((t) => {
+          t.contentEditable = t.isContentEditable ? "false" : "true";
+        });
+
+        const cc = document.querySelectorAll("taskContainer li button");
+
+        //const task =document.querySelectorAll(".taskContainer li");
+        //task.forEach(t=>t.contentEditable="true");
+
+        // taskupdate.forEach(function (x){
+        //     if(x.iscontentEditable)
+        // {
+        //     x.contentEditable="false";
+        // }else{
+        //     x.contentEditable="true";
+        // }
+        // })
+      }
+
+      // function edit(){
+      //     if(document.designMode=="off")
+      // {
+      //     document.designMode="on";
+      //     console.log("on");
+      // }else{
+      //     document.designMode="off";
+      //     console.log("off");
+      // }
+      // }
+    </script>
+  </body>
+</html>

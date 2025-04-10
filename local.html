@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <input type="text" id="input" placeholder="enter name">
+    <button onclick="add()">add</button>
+    <button onclick="show()">show</button>
+    <button onclick="localStorage.clear()">remove</button>
+    <p id="para"></p>
+
+    <script>
+
+        function add(){
+            let user = document.getElementById("input").value;
+            console.log(user);
+            localStorage.setItem("user",user);
+            input.value = "";
+        }
+
+        function show(){
+           let name= localStorage.getItem("user");
+           document.getElementById("para").textContent=name;
+        }
+    
+
+    </script>
+</body>
+</html>

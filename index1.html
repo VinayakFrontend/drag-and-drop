@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display: flex;
+            gap:20px;
+        }
+
+        #leftbox{
+            border:dotted;
+            width:50%;
+            text-align: center;
+            align-content: center;
+            justify-items: center;
+          
+        }
+        #rightbox{
+            border:dotted;
+            width:50%;
+        }
+
+        .lists{
+           background-color: aqua;
+           margin:10px;
+           width:50%
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="leftbox">
+            <div class="lists" draggable="true">list item 1</div>
+            <div class="lists" draggable="true">list item 2</div>
+            <div class="lists" draggable="true">list item 3</div>
+        </div>
+        <div id="rightbox">
+
+        </div>
+    </div>
+
+    <script>
+        let lists = document.getElementsByClassName("lists");
+        let leftbox = document.getElementById("leftbox");
+        let rightbox = document.getElementById("rightbox");
+
+
+        let selected = null;
+
+        for(let list of lists)
+    {
+        list.addEventListener("dragstart",function(e){
+            //console.log(e);
+            //console.log(e.target);
+            selected=e.target;
+        });
+    }
+
+    rightbox.addEventListener("dragover",function(e){
+            e.preventDefault();
+    });
+
+    rightbox.addEventListener("drop",function(){
+        if(selected)
+    {
+        rightbox.appendChild(selected);
+        selected=null;
+    }
+    });
+
+    leftbox.addEventListener("dragover",function(e){
+            e.preventDefault();
+    });
+
+    leftbox.addEventListener("drop",function(){
+        if(selected)
+    {
+        leftbox.appendChild(selected);
+        selected=null;
+    }
+    });
+
+
+
+    </script>
+</body>
+</html>
